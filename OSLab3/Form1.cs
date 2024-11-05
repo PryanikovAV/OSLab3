@@ -10,6 +10,8 @@ namespace OSLab3
         private int processId = 1;
         private int systemTime = 0;
         private List<Process> processList = new List<Process>();
+        private Scheduler scheduler;
+        private TableView tableView;
         
         public Form1()
         {
