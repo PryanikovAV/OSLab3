@@ -8,21 +8,32 @@ namespace OSLab3
     public partial class Form1 : Form
     {
         private int processId = 1;
-        private int systemTime = 0;
         private List<Process> processList = new List<Process>();
         private Scheduler scheduler;
         private TableView tableView;
-        
+
         public Form1()
         {
             InitializeComponent();
+
+            tableView = new TableView(processGridView, systemTimeLabel);
+            scheduler = new Scheduler(
+                processList,
+                tableView.UpdateTimeCallBack,
+                tableView.UpdateProcessCallBack);
         }
 
-        private void addProcessButton_Click(object sender, EventArgs e)
+        private void addButton_Click(object sender, EventArgs e)
         {
-            int arrivalTime = int.Parse(arrivalTimeTextBox.Text);
-            int burstTime = int.Parse(burstTimeTextBox.Text);
-            int memory = int.Parse(memoryTextBox.Text);
+            if (!int.TryParse(arrivalTimeTextBox.Text, out int arrivalTime) ||
+                !int.TryParse(burstTimeTextBox.Text, out int burstTime) ||
+                !int.TryParse(memoryTextBox.Text, out int memory))
+            {
+                MessageBox.Show("Введите корректные данные", "Ошибка ввода",
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+                return;
+            }
 
             Process process = new Process(processId++, arrivalTime, burstTime, memory);
             processList.Add(process);
@@ -34,23 +45,18 @@ namespace OSLab3
             memoryTextBox.Clear();
         }
 
-        private void startSimulationButton_Click(object sender, EventArgs e)
+        private void startButton_Click(object sender, EventArgs e)
         {
-            if (processList.Count == 0)
+            int quantumTime = 3;
+
+            if (radioButtonRR.Checked)
             {
-                MessageBox.Show("Планировщик процессов пуст", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                scheduler.SimulateRR(quantumTime);
             }
-
-            systemTime = 0;
-            systemTimeLabel.Text = $"Системное время: {systemTime}";
-        }
-
-        private void stopSimulationButton_Click(object sender, EventArgs e)
-        {
-            systemTime = 0;
-            processList.Clear();
-            processGridView.Rows.Clear();         
+            else if (radioButtonSJFD.Checked)
+            {
+                //scheduler.SimulateSJFD();
+            }
         }
     }
 }

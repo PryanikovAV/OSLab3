@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             arrivalTimeTextBox = new TextBox();
             burstTimeTextBox = new TextBox();
             memoryTextBox = new TextBox();
@@ -35,19 +36,20 @@
             label3 = new Label();
             label4 = new Label();
             systemTimeLabel = new Label();
-            startSimulationButton = new Button();
+            startButton = new Button();
             radioButtonRR = new RadioButton();
-            radioButtonSJF = new RadioButton();
+            radioButtonSJFD = new RadioButton();
             groupBoxAlgorithm = new GroupBox();
             progressBarProcess = new ProgressBar();
-            stopSimulationButton = new Button();
-            addProcessButton = new Button();
+            resetButton = new Button();
+            addButton = new Button();
             processGridView = new DataGridView();
             id = new DataGridViewTextBoxColumn();
             arrivalTime = new DataGridViewTextBoxColumn();
             burstTime = new DataGridViewTextBoxColumn();
             remainingTime = new DataGridViewTextBoxColumn();
             memory = new DataGridViewTextBoxColumn();
+            pauseButton = new Button();
             groupBoxAlgorithm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)processGridView).BeginInit();
             SuspendLayout();
@@ -103,21 +105,22 @@
             // systemTimeLabel
             // 
             systemTimeLabel.AutoSize = true;
-            systemTimeLabel.Location = new Point(20, 390);
+            systemTimeLabel.CausesValidation = false;
+            systemTimeLabel.Location = new Point(12, 384);
             systemTimeLabel.Name = "systemTimeLabel";
             systemTimeLabel.Size = new Size(148, 20);
             systemTimeLabel.TabIndex = 10;
             systemTimeLabel.Text = "Системное время: 0";
             // 
-            // startSimulationButton
+            // startButton
             // 
-            startSimulationButton.Location = new Point(520, 507);
-            startSimulationButton.Name = "startSimulationButton";
-            startSimulationButton.Size = new Size(115, 29);
-            startSimulationButton.TabIndex = 13;
-            startSimulationButton.Text = "Начать";
-            startSimulationButton.UseVisualStyleBackColor = true;
-            startSimulationButton.Click += startSimulationButton_Click;
+            startButton.Location = new Point(670, 509);
+            startButton.Name = "startButton";
+            startButton.Size = new Size(100, 29);
+            startButton.TabIndex = 13;
+            startButton.Text = "Начать";
+            startButton.UseVisualStyleBackColor = true;
+            startButton.Click += startButton_Click;
             // 
             // radioButtonRR
             // 
@@ -131,24 +134,24 @@
             radioButtonRR.Text = "Round Robin";
             radioButtonRR.UseVisualStyleBackColor = true;
             // 
-            // radioButtonSJF
+            // radioButtonSJFD
             // 
-            radioButtonSJF.AutoSize = true;
-            radioButtonSJF.Location = new Point(6, 56);
-            radioButtonSJF.Name = "radioButtonSJF";
-            radioButtonSJF.Size = new Size(50, 24);
-            radioButtonSJF.TabIndex = 15;
-            radioButtonSJF.TabStop = true;
-            radioButtonSJF.Text = "SJF";
-            radioButtonSJF.UseVisualStyleBackColor = true;
+            radioButtonSJFD.AutoSize = true;
+            radioButtonSJFD.Location = new Point(6, 56);
+            radioButtonSJFD.Name = "radioButtonSJFD";
+            radioButtonSJFD.Size = new Size(154, 24);
+            radioButtonSJFD.TabIndex = 15;
+            radioButtonSJFD.TabStop = true;
+            radioButtonSJFD.Text = "SJF Вытесняющий";
+            radioButtonSJFD.UseVisualStyleBackColor = true;
             // 
             // groupBoxAlgorithm
             // 
             groupBoxAlgorithm.Controls.Add(radioButtonRR);
-            groupBoxAlgorithm.Controls.Add(radioButtonSJF);
-            groupBoxAlgorithm.Location = new Point(520, 390);
+            groupBoxAlgorithm.Controls.Add(radioButtonSJFD);
+            groupBoxAlgorithm.Location = new Point(566, 383);
             groupBoxAlgorithm.Name = "groupBoxAlgorithm";
-            groupBoxAlgorithm.Size = new Size(250, 87);
+            groupBoxAlgorithm.Size = new Size(204, 87);
             groupBoxAlgorithm.TabIndex = 16;
             groupBoxAlgorithm.TabStop = false;
             groupBoxAlgorithm.Text = "Алгоритм планирования";
@@ -160,36 +163,47 @@
             progressBarProcess.Size = new Size(758, 29);
             progressBarProcess.TabIndex = 17;
             // 
-            // stopSimulationButton
+            // resetButton
             // 
-            stopSimulationButton.Location = new Point(655, 507);
-            stopSimulationButton.Name = "stopSimulationButton";
-            stopSimulationButton.Size = new Size(115, 29);
-            stopSimulationButton.TabIndex = 18;
-            stopSimulationButton.Text = "Остановить";
-            stopSimulationButton.UseVisualStyleBackColor = true;
-            stopSimulationButton.Click += stopSimulationButton_Click;
+            resetButton.Location = new Point(409, 509);
+            resetButton.Name = "resetButton";
+            resetButton.Size = new Size(100, 29);
+            resetButton.TabIndex = 18;
+            resetButton.Text = "Сброс";
+            resetButton.UseVisualStyleBackColor = true;
             // 
-            // addProcessButton
+            // addButton
             // 
-            addProcessButton.Location = new Point(330, 507);
-            addProcessButton.Name = "addProcessButton";
-            addProcessButton.Size = new Size(115, 29);
-            addProcessButton.TabIndex = 19;
-            addProcessButton.Text = "Добавить";
-            addProcessButton.UseVisualStyleBackColor = true;
-            addProcessButton.Click += addProcessButton_Click;
+            addButton.Location = new Point(303, 509);
+            addButton.Name = "addButton";
+            addButton.Size = new Size(100, 29);
+            addButton.TabIndex = 19;
+            addButton.Text = "Добавить";
+            addButton.UseVisualStyleBackColor = true;
+            addButton.Click += addButton_Click;
             // 
             // processGridView
             // 
             processGridView.AllowUserToAddRows = false;
             processGridView.AllowUserToDeleteRows = false;
+            processGridView.AllowUserToResizeColumns = false;
+            processGridView.AllowUserToResizeRows = false;
             processGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             processGridView.Columns.AddRange(new DataGridViewColumn[] { id, arrivalTime, burstTime, remainingTime, memory });
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Window;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            processGridView.DefaultCellStyle = dataGridViewCellStyle1;
             processGridView.Location = new Point(12, 12);
+            processGridView.MultiSelect = false;
             processGridView.Name = "processGridView";
             processGridView.ReadOnly = true;
             processGridView.RowHeadersWidth = 51;
+            processGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
             processGridView.Size = new Size(758, 334);
             processGridView.TabIndex = 20;
             // 
@@ -233,17 +247,27 @@
             memory.ReadOnly = true;
             memory.Width = 90;
             // 
+            // pauseButton
+            // 
+            pauseButton.Location = new Point(670, 474);
+            pauseButton.Name = "pauseButton";
+            pauseButton.Size = new Size(100, 29);
+            pauseButton.TabIndex = 21;
+            pauseButton.Text = "Пауза";
+            pauseButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(782, 553);
+            Controls.Add(pauseButton);
             Controls.Add(processGridView);
-            Controls.Add(addProcessButton);
-            Controls.Add(stopSimulationButton);
+            Controls.Add(addButton);
+            Controls.Add(resetButton);
             Controls.Add(progressBarProcess);
             Controls.Add(groupBoxAlgorithm);
-            Controls.Add(startSimulationButton);
+            Controls.Add(startButton);
             Controls.Add(systemTimeLabel);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -270,19 +294,20 @@
         private Label label3;
         private Label label4;
         private Label systemTimeLabel;
-        private Button startSimulationButton;
+        private Button startButton;
         private DataGridViewTextBoxColumn Column1;
         private RadioButton radioButtonRR;
-        private RadioButton radioButtonSJF;
+        private RadioButton radioButtonSJFD;
         private GroupBox groupBoxAlgorithm;
         private ProgressBar progressBarProcess;
-        private Button stopSimulationButton;
-        private Button addProcessButton;
+        private Button resetButton;
+        private Button addButton;
         private DataGridView processGridView;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn arrivalTime;
         private DataGridViewTextBoxColumn burstTime;
         private DataGridViewTextBoxColumn remainingTime;
         private DataGridViewTextBoxColumn memory;
+        private Button pauseButton;
     }
 }
