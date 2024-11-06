@@ -30,7 +30,7 @@ namespace OSLab3
                 !int.TryParse(memoryTextBox.Text, out int memory))
             {
                 MessageBox.Show("Введите корректные данные", "Ошибка ввода",
-                    MessageBoxButtons.OK, 
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }
@@ -55,8 +55,16 @@ namespace OSLab3
             }
             else if (radioButtonSJFD.Checked)
             {
-                //scheduler.SimulateSJFD();
+                scheduler.SimulateSJFD();
             }
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            processGridView.Rows.Clear();
+            processList.Clear();          
+            systemTimeLabel.Text = $"Системное время: 0";
+            // Удалить статус, напр. "RR выполнен"
         }
     }
 }

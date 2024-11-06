@@ -45,13 +45,5 @@ namespace OSLab3
                 }
             }
         }
-
-        public void ResetProcessColors()
-        {
-            foreach (DataGridViewRow row in processGridView.Rows)
-            {
-                row.DefaultCellStyle.BackColor = Color.White;
-            }
-        }
     }
 }
