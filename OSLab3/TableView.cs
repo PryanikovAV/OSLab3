@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static OSLab3.Process;
 
 namespace OSLab3
 {
@@ -20,30 +21,36 @@ namespace OSLab3
         {
             systemTimeLabel.Text = $"Системное время: {systemTime}";
         }
-        
-        public void UpdateProcessCallBack(Process process, string status)
+
+        public void RefreshProcessGridView(List<Process> processes)
         {
             foreach (DataGridViewRow row in processGridView.Rows)
             {
-                if ((int)row.Cells["id"].Value == process.Id)
+                int processId = (int)row.Cells["id"].Value;
+                var process = processes.FirstOrDefault(p => p.Id == processId);
+
+                if (process != null)
                 {
                     row.Cells["remainingTime"].Value = process.RemainingTime;
 
-                    switch (status)
+                    switch (process.Status)
                     {
-                        case "Waiting":
+                        case ProcessStatus.WaitingToStart:
                             row.DefaultCellStyle.BackColor = Color.Yellow;
                             break;
-                        case "Running":
+                        case ProcessStatus.WaitingForMemory:
+                            row.DefaultCellStyle.BackColor = Color.Orange;
+                            break;
+                        case ProcessStatus.Running:
                             row.DefaultCellStyle.BackColor = Color.LightGreen;
                             break;
-                        case "Completed":
+                        case ProcessStatus.Completed:
                             row.DefaultCellStyle.BackColor = Color.LightGray;
                             break;
                     }
-                    break;
                 }
             }
         }
+
     }
 }

@@ -2,11 +2,20 @@
 {
     public class Process
     {
+        public enum ProcessStatus
+        {
+            WaitingToStart,
+            WaitingForMemory,
+            Running,
+            Completed
+        }
+
         public int Id { get; set; }
-        public int ArrivalTime { get; set; }  // Время появления процесса
-        public int BurstTime { get; set; }  // Время выполнения процесса
-        public int Memory { get; set; }  // Требуемая память
-        public int RemainingTime { get; set; }  // Изначально == времени исполнения
+        public int ArrivalTime { get; set; }
+        public int BurstTime { get; set; }
+        public int Memory { get; set; }
+        public int RemainingTime { get; set; }
+        public ProcessStatus Status { get; set; } = ProcessStatus.WaitingToStart;  // Изначально ОЖИДАНИЕ
 
         public Process(int id, int arrivalTime, int burstTime, int memory)
         {
@@ -17,4 +26,5 @@
             RemainingTime = burstTime;
         }
     }
+
 }

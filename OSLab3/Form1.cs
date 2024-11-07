@@ -20,7 +20,7 @@ namespace OSLab3
             scheduler = new Scheduler(
                 processList,
                 tableView.UpdateTimeCallBack,
-                tableView.UpdateProcessCallBack);
+                tableView);
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -48,14 +48,15 @@ namespace OSLab3
         private void startButton_Click(object sender, EventArgs e)
         {
             int quantumTime = 3;
+            int totalMemory = 100;
 
             if (radioButtonRR.Checked)
             {
-                scheduler.SimulateRR(quantumTime);
+                scheduler.SimulateRR(quantumTime, totalMemory);
             }
             else if (radioButtonSJFD.Checked)
             {
-                scheduler.SimulateSJFD();
+                scheduler.SimulateSJFD(totalMemory);
             }
         }
 
@@ -64,7 +65,6 @@ namespace OSLab3
             processGridView.Rows.Clear();
             processList.Clear();          
             systemTimeLabel.Text = $"Системное время: 0";
-            // Удалить статус, напр. "RR выполнен"
         }
     }
 }

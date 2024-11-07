@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Drawing.Text;
 using System.Linq;
 using System.Threading;
+using System.Xml;
+using static OSLab3.Process;
 
 namespace OSLab3
 {
@@ -11,89 +13,55 @@ namespace OSLab3
     {
         private List<Process> processes;
         private Action<int> updateTimeCallBack;
-        private Action<Process, string> updateProcessCallBack;
+        private TableView tableView;
         private int systemTime = 0;
 
-        public Scheduler(List<Process> processes,
-            Action<int> updateTimeCallBack,
-            Action<Process, string> updateProcessCallBack)
+        public Scheduler(List<Process> processes, Action<int> updateTimeCallBack, TableView tableView)
         {
             this.processes = processes;
             this.updateTimeCallBack = updateTimeCallBack;
-            this.updateProcessCallBack = updateProcessCallBack;
+            this.tableView = tableView;
         }
 
-
-        public void SimulateRR(int quantumTime)
+        public void SimulateRR(int quantumTime, int totalMemory)
         {
             systemTime = 0;
-
-            processes = processes.OrderBy(p => p.ArrivalTime).ToList();  // сперва сортируем
+            int availableMemory = totalMemory;
+            processes = processes.OrderBy(p => p.ArrivalTime).ToList();
 
             while (processes.Any(p => p.RemainingTime > 0))
             {
-                foreach (var process in processes)
+                while (availableMemory > 0)
                 {
-                    if (process.RemainingTime > 0 && process.ArrivalTime <= systemTime)
-                    {
-                        updateProcessCallBack(process, "Waiting");  // процесс в очереди == жёлтый
-                        Application.DoEvents();  // <-- обновление интерфейса
-                        Thread.Sleep(700);
-
-                        if (process.RemainingTime <= quantumTime)
-                        {
-                            systemTime += process.RemainingTime;
-                            process.RemainingTime = 0;
-                            updateProcessCallBack(process, "Completed");  // завершён == серый
-                        }
-                        else
-                        {
-                            process.RemainingTime -= quantumTime;
-                            systemTime += quantumTime;
-                            updateProcessCallBack(process, "Running");  // в процессе == зелёный
-                        }
-
-                        updateTimeCallBack(systemTime);
-                        Application.DoEvents();  // <-- обновление интерфейса
-                        Thread.Sleep(700);
-                    }
-                    else if (process.RemainingTime > 0 && process.ArrivalTime > systemTime)
-                    {
-                        systemTime += quantumTime;
-                        updateProcessCallBack(process, "Waiting");
-                        updateTimeCallBack(systemTime);
-                        Application.DoEvents();  // <-- обновление интерфейса
-                        Thread.Sleep(700);
-                    }
+                    if (process)
                 }
             }
-
-            MessageBox.Show("RR выполнен", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        
 
-        public void SimulateSJFD()
+
+        public void SimulateSJFD(int totalMemory)
         {
             systemTime = 0;
 
             while (processes.Any(p => p.RemainingTime > 0))
             {
-                var process = processes  // 
+                var process = processes
                     .Where(p => p.ArrivalTime <= systemTime && p.RemainingTime > 0)
                     .OrderBy(p => p.RemainingTime)
-                    .FirstOrDefault();  // <-- первый элемент сорт. списка
+                    .FirstOrDefault();
 
                 if (process != null)
                 {
                     process.RemainingTime -= 1;
                     systemTime += 1;
-                    updateProcessCallBack(process, "Running");
                     updateTimeCallBack(systemTime);
                     Application.DoEvents();
                     Thread.Sleep(700);
 
                     if (process.RemainingTime == 0)
                     {
-                        updateProcessCallBack(process, "Completed"); // процесс завершён => СЕРЫЙ
+                        process.Status = ProcessStatus.Completed;
                         Application.DoEvents();
                         Thread.Sleep(700);
                     }
@@ -108,12 +76,14 @@ namespace OSLab3
                         Thread.Sleep(700);
                     }
                 }
+
                 foreach (var p in processes.Where(p => p.ArrivalTime <= systemTime && p.RemainingTime > 0 && p != process))
                 {
-                    updateProcessCallBack(p, "Waiting");  // <--все остальнеы процессы в ЖЁЛТЫЙ
+                    p.Status = ProcessStatus.WaitingToStart;
                 }
             }
+
             MessageBox.Show("SJF с вытеснением завершён", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-    }
+    }    
 }
