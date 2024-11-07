@@ -26,5 +26,4 @@
             RemainingTime = burstTime;
         }
     }
-
 }

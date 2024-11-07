@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             arrivalTimeTextBox = new TextBox();
             burstTimeTextBox = new TextBox();
             memoryTextBox = new TextBox();
@@ -40,7 +40,6 @@
             radioButtonRR = new RadioButton();
             radioButtonSJFD = new RadioButton();
             groupBoxAlgorithm = new GroupBox();
-            progressBarProcess = new ProgressBar();
             resetButton = new Button();
             addButton = new Button();
             processGridView = new DataGridView();
@@ -51,55 +50,65 @@
             memory = new DataGridViewTextBoxColumn();
             pauseButton = new Button();
             continueButton = new Button();
+            availableMemoryLabel = new Label();
+            systemDataGroupBox1 = new GroupBox();
+            processButtonsBox1 = new GroupBox();
+            processAddGroupBox1 = new GroupBox();
             groupBoxAlgorithm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)processGridView).BeginInit();
+            systemDataGroupBox1.SuspendLayout();
+            processButtonsBox1.SuspendLayout();
+            processAddGroupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // arrivalTimeTextBox
             // 
-            arrivalTimeTextBox.Location = new Point(172, 443);
+            arrivalTimeTextBox.Location = new Point(122, 26);
+            arrivalTimeTextBox.Margin = new Padding(3, 2, 3, 2);
             arrivalTimeTextBox.Name = "arrivalTimeTextBox";
-            arrivalTimeTextBox.Size = new Size(125, 27);
+            arrivalTimeTextBox.Size = new Size(110, 23);
             arrivalTimeTextBox.TabIndex = 3;
             // 
             // burstTimeTextBox
             // 
-            burstTimeTextBox.Location = new Point(172, 476);
+            burstTimeTextBox.Location = new Point(122, 53);
+            burstTimeTextBox.Margin = new Padding(3, 2, 3, 2);
             burstTimeTextBox.Name = "burstTimeTextBox";
-            burstTimeTextBox.Size = new Size(125, 27);
+            burstTimeTextBox.Size = new Size(110, 23);
             burstTimeTextBox.TabIndex = 4;
             // 
             // memoryTextBox
             // 
-            memoryTextBox.Location = new Point(172, 509);
+            memoryTextBox.Location = new Point(122, 80);
+            memoryTextBox.Margin = new Padding(3, 2, 3, 2);
             memoryTextBox.Name = "memoryTextBox";
-            memoryTextBox.Size = new Size(125, 27);
+            memoryTextBox.Size = new Size(110, 23);
             memoryTextBox.TabIndex = 5;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 446);
+            label2.Location = new Point(6, 29);
             label2.Name = "label2";
-            label2.Size = new Size(134, 20);
+            label2.Size = new Size(104, 15);
             label2.TabIndex = 7;
             label2.Text = "Время появления";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 479);
+            label3.Location = new Point(6, 56);
             label3.Name = "label3";
-            label3.Size = new Size(146, 20);
+            label3.Size = new Size(114, 15);
             label3.TabIndex = 8;
             label3.Text = "Время выполнения";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 512);
+            label4.Location = new Point(6, 83);
             label4.Name = "label4";
-            label4.Size = new Size(61, 20);
+            label4.Size = new Size(48, 15);
             label4.TabIndex = 9;
             label4.Text = "Память";
             // 
@@ -107,17 +116,18 @@
             // 
             systemTimeLabel.AutoSize = true;
             systemTimeLabel.CausesValidation = false;
-            systemTimeLabel.Location = new Point(12, 384);
+            systemTimeLabel.Location = new Point(6, 44);
             systemTimeLabel.Name = "systemTimeLabel";
-            systemTimeLabel.Size = new Size(148, 20);
+            systemTimeLabel.Size = new Size(117, 15);
             systemTimeLabel.TabIndex = 10;
             systemTimeLabel.Text = "Системное время: 0";
             // 
             // startButton
             // 
-            startButton.Location = new Point(665, 509);
+            startButton.Location = new Point(202, 15);
+            startButton.Margin = new Padding(3, 2, 3, 2);
             startButton.Name = "startButton";
-            startButton.Size = new Size(105, 29);
+            startButton.Size = new Size(92, 23);
             startButton.TabIndex = 13;
             startButton.Text = "Начать";
             startButton.UseVisualStyleBackColor = true;
@@ -127,9 +137,10 @@
             // 
             radioButtonRR.AutoSize = true;
             radioButtonRR.Checked = true;
-            radioButtonRR.Location = new Point(6, 26);
+            radioButtonRR.Location = new Point(5, 20);
+            radioButtonRR.Margin = new Padding(3, 2, 3, 2);
             radioButtonRR.Name = "radioButtonRR";
-            radioButtonRR.Size = new Size(116, 24);
+            radioButtonRR.Size = new Size(94, 19);
             radioButtonRR.TabIndex = 14;
             radioButtonRR.TabStop = true;
             radioButtonRR.Text = "Round Robin";
@@ -138,9 +149,10 @@
             // radioButtonSJFD
             // 
             radioButtonSJFD.AutoSize = true;
-            radioButtonSJFD.Location = new Point(6, 56);
+            radioButtonSJFD.Location = new Point(5, 42);
+            radioButtonSJFD.Margin = new Padding(3, 2, 3, 2);
             radioButtonSJFD.Name = "radioButtonSJFD";
-            radioButtonSJFD.Size = new Size(154, 24);
+            radioButtonSJFD.Size = new Size(125, 19);
             radioButtonSJFD.TabIndex = 15;
             radioButtonSJFD.TabStop = true;
             radioButtonSJFD.Text = "SJF Вытесняющий";
@@ -150,25 +162,21 @@
             // 
             groupBoxAlgorithm.Controls.Add(radioButtonRR);
             groupBoxAlgorithm.Controls.Add(radioButtonSJFD);
-            groupBoxAlgorithm.Location = new Point(554, 383);
+            groupBoxAlgorithm.Location = new Point(551, 264);
+            groupBoxAlgorithm.Margin = new Padding(3, 2, 3, 2);
             groupBoxAlgorithm.Name = "groupBoxAlgorithm";
-            groupBoxAlgorithm.Size = new Size(216, 87);
+            groupBoxAlgorithm.Padding = new Padding(3, 2, 3, 2);
+            groupBoxAlgorithm.Size = new Size(202, 65);
             groupBoxAlgorithm.TabIndex = 16;
             groupBoxAlgorithm.TabStop = false;
             groupBoxAlgorithm.Text = "Алгоритм планирования";
             // 
-            // progressBarProcess
-            // 
-            progressBarProcess.Location = new Point(12, 352);
-            progressBarProcess.Name = "progressBarProcess";
-            progressBarProcess.Size = new Size(758, 29);
-            progressBarProcess.TabIndex = 17;
-            // 
             // resetButton
             // 
-            resetButton.Location = new Point(414, 509);
+            resetButton.Location = new Point(238, 53);
+            resetButton.Margin = new Padding(3, 2, 3, 2);
             resetButton.Name = "resetButton";
-            resetButton.Size = new Size(105, 29);
+            resetButton.Size = new Size(92, 23);
             resetButton.TabIndex = 18;
             resetButton.Text = "Сброс";
             resetButton.UseVisualStyleBackColor = true;
@@ -176,9 +184,10 @@
             // 
             // addButton
             // 
-            addButton.Location = new Point(303, 509);
+            addButton.Location = new Point(238, 80);
+            addButton.Margin = new Padding(3, 2, 3, 2);
             addButton.Name = "addButton";
-            addButton.Size = new Size(105, 29);
+            addButton.Size = new Size(92, 23);
             addButton.TabIndex = 19;
             addButton.Text = "Добавить";
             addButton.UseVisualStyleBackColor = true;
@@ -188,25 +197,25 @@
             // 
             processGridView.AllowUserToAddRows = false;
             processGridView.AllowUserToDeleteRows = false;
-            processGridView.AllowUserToResizeColumns = false;
             processGridView.AllowUserToResizeRows = false;
             processGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             processGridView.Columns.AddRange(new DataGridViewColumn[] { id, arrivalTime, burstTime, remainingTime, memory });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Window;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Window;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            processGridView.DefaultCellStyle = dataGridViewCellStyle3;
-            processGridView.Location = new Point(12, 12);
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Window;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            processGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            processGridView.Location = new Point(10, 9);
+            processGridView.Margin = new Padding(3, 2, 3, 2);
             processGridView.MultiSelect = false;
             processGridView.Name = "processGridView";
             processGridView.ReadOnly = true;
             processGridView.RowHeadersWidth = 51;
             processGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            processGridView.Size = new Size(758, 334);
+            processGridView.Size = new Size(743, 250);
             processGridView.TabIndex = 20;
             // 
             // id
@@ -251,67 +260,113 @@
             // 
             // pauseButton
             // 
-            pauseButton.Location = new Point(554, 474);
+            pauseButton.Location = new Point(6, 15);
+            pauseButton.Margin = new Padding(3, 2, 3, 2);
             pauseButton.Name = "pauseButton";
-            pauseButton.Size = new Size(105, 29);
+            pauseButton.Size = new Size(92, 23);
             pauseButton.TabIndex = 21;
             pauseButton.Text = "Пауза";
             pauseButton.UseVisualStyleBackColor = true;
+            pauseButton.Click += pauseButton_Click;
             // 
             // continueButton
             // 
-            continueButton.Location = new Point(665, 474);
+            continueButton.Location = new Point(104, 15);
+            continueButton.Margin = new Padding(3, 2, 3, 2);
             continueButton.Name = "continueButton";
-            continueButton.Size = new Size(105, 29);
+            continueButton.Size = new Size(92, 23);
             continueButton.TabIndex = 22;
             continueButton.Text = "Продолжить";
             continueButton.UseVisualStyleBackColor = true;
+            continueButton.Click += continueButton_Click;
+            // 
+            // availableMemoryLabel
+            // 
+            availableMemoryLabel.AutoSize = true;
+            availableMemoryLabel.Location = new Point(6, 22);
+            availableMemoryLabel.Name = "availableMemoryLabel";
+            availableMemoryLabel.Size = new Size(167, 15);
+            availableMemoryLabel.TabIndex = 23;
+            availableMemoryLabel.Text = "Доступная память: 100 из 100";
+            // 
+            // systemDataGroupBox1
+            // 
+            systemDataGroupBox1.Controls.Add(availableMemoryLabel);
+            systemDataGroupBox1.Controls.Add(systemTimeLabel);
+            systemDataGroupBox1.Location = new Point(361, 264);
+            systemDataGroupBox1.Name = "systemDataGroupBox1";
+            systemDataGroupBox1.Size = new Size(184, 65);
+            systemDataGroupBox1.TabIndex = 24;
+            systemDataGroupBox1.TabStop = false;
+            systemDataGroupBox1.Text = "Системная информация";
+            // 
+            // processButtonsBox1
+            // 
+            processButtonsBox1.Controls.Add(pauseButton);
+            processButtonsBox1.Controls.Add(continueButton);
+            processButtonsBox1.Controls.Add(startButton);
+            processButtonsBox1.Location = new Point(454, 332);
+            processButtonsBox1.Name = "processButtonsBox1";
+            processButtonsBox1.Size = new Size(299, 44);
+            processButtonsBox1.TabIndex = 25;
+            processButtonsBox1.TabStop = false;
+            // 
+            // processAddGroupBox1
+            // 
+            processAddGroupBox1.Controls.Add(label4);
+            processAddGroupBox1.Controls.Add(label2);
+            processAddGroupBox1.Controls.Add(arrivalTimeTextBox);
+            processAddGroupBox1.Controls.Add(label3);
+            processAddGroupBox1.Controls.Add(resetButton);
+            processAddGroupBox1.Controls.Add(addButton);
+            processAddGroupBox1.Controls.Add(burstTimeTextBox);
+            processAddGroupBox1.Controls.Add(memoryTextBox);
+            processAddGroupBox1.Location = new Point(10, 264);
+            processAddGroupBox1.Name = "processAddGroupBox1";
+            processAddGroupBox1.Size = new Size(345, 112);
+            processAddGroupBox1.TabIndex = 26;
+            processAddGroupBox1.TabStop = false;
+            processAddGroupBox1.Text = "Добавление процессов";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(782, 553);
-            Controls.Add(continueButton);
-            Controls.Add(pauseButton);
+            ClientSize = new Size(766, 388);
+            Controls.Add(processAddGroupBox1);
+            Controls.Add(processButtonsBox1);
+            Controls.Add(systemDataGroupBox1);
             Controls.Add(processGridView);
-            Controls.Add(addButton);
-            Controls.Add(resetButton);
-            Controls.Add(progressBarProcess);
             Controls.Add(groupBoxAlgorithm);
-            Controls.Add(startButton);
-            Controls.Add(systemTimeLabel);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(memoryTextBox);
-            Controls.Add(burstTimeTextBox);
-            Controls.Add(arrivalTimeTextBox);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
             groupBoxAlgorithm.ResumeLayout(false);
             groupBoxAlgorithm.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)processGridView).EndInit();
+            systemDataGroupBox1.ResumeLayout(false);
+            systemDataGroupBox1.PerformLayout();
+            processButtonsBox1.ResumeLayout(false);
+            processAddGroupBox1.ResumeLayout(false);
+            processAddGroupBox1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-        private TextBox processIdTextBox;
+        // private TextBox processIdTextBox;
         private TextBox arrivalTimeTextBox;
         private TextBox burstTimeTextBox;
         private TextBox memoryTextBox;
-        private Label label1;
+        // private Label label1;
         private Label label2;
         private Label label3;
         private Label label4;
         private Label systemTimeLabel;
         private Button startButton;
-        private DataGridViewTextBoxColumn Column1;
+        // private DataGridViewTextBoxColumn Column1;
         private RadioButton radioButtonRR;
         private RadioButton radioButtonSJFD;
         private GroupBox groupBoxAlgorithm;
-        private ProgressBar progressBarProcess;
         private Button resetButton;
         private Button addButton;
         private DataGridView processGridView;
@@ -322,5 +377,9 @@
         private DataGridViewTextBoxColumn memory;
         private Button pauseButton;
         private Button continueButton;
+        private Label availableMemoryLabel;
+        private GroupBox systemDataGroupBox1;
+        private GroupBox processButtonsBox1;
+        private GroupBox processAddGroupBox1;
     }
 }

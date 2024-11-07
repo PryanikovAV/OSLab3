@@ -16,10 +16,11 @@ namespace OSLab3
         {
             InitializeComponent();
 
-            tableView = new TableView(processGridView, systemTimeLabel);
+            tableView = new TableView(processGridView, systemTimeLabel, availableMemoryLabel);
             scheduler = new Scheduler(
                 processList,
                 tableView.UpdateTimeCallBack,
+                tableView.UpdateMemoryCallBack,
                 tableView);
         }
 
@@ -45,26 +46,50 @@ namespace OSLab3
             memoryTextBox.Clear();
         }
 
-        private void startButton_Click(object sender, EventArgs e)
+        private async void startButton_Click(object sender, EventArgs e)
         {
             int quantumTime = 3;
             int totalMemory = 100;
 
             if (radioButtonRR.Checked)
             {
-                scheduler.SimulateRR(quantumTime, totalMemory);
+                await scheduler.SimulateRR(quantumTime, totalMemory);
             }
             else if (radioButtonSJFD.Checked)
             {
-                scheduler.SimulateSJFD(totalMemory);
+                //scheduler.SimulateSJFD(totalMemory);
             }
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
+            processList.Clear();
             processGridView.Rows.Clear();
-            processList.Clear();          
+
             systemTimeLabel.Text = $"Системное время: 0";
+            availableMemoryLabel.Text = "Доступная память: 100 из 100";
+            processId = 1;
+
+            arrivalTimeTextBox.Clear();
+            burstTimeTextBox.Clear();
+            memoryTextBox.Clear();
+
+            tableView = new TableView(processGridView, systemTimeLabel, availableMemoryLabel);
+            scheduler = new Scheduler(
+                processList,
+                tableView.UpdateTimeCallBack,
+                tableView.UpdateMemoryCallBack,
+                tableView);
+        }
+
+        private void pauseButton_Click(object sender, EventArgs e)
+        {
+            scheduler.Pause();
+        }
+
+        private void continueButton_Click(object sender, EventArgs e)
+        {
+            scheduler.ContinueSimulation();
         }
     }
 }

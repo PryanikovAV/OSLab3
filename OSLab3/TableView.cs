@@ -9,17 +9,24 @@ namespace OSLab3
     {
         private DataGridView processGridView;
         private Label systemTimeLabel;
+        private Label availableMemoryLabel;
 
 
-        public TableView(DataGridView processGridView, Label systemTimeLabel)
+        public TableView(DataGridView processGridView, Label systemTimeLabel, Label availableMemoryLabel)
         {
             this.processGridView = processGridView;
             this.systemTimeLabel = systemTimeLabel;
+            this.availableMemoryLabel = availableMemoryLabel;
         }
         
         public void UpdateTimeCallBack(int systemTime)
         {
             systemTimeLabel.Text = $"Системное время: {systemTime}";
+        }
+
+        public void UpdateMemoryCallBack(int availableMemory, int totalMemory)
+        {
+            availableMemoryLabel.Text = $"Доступная память: {availableMemory} из {totalMemory}";
         }
 
         public void RefreshProcessGridView(List<Process> processes)
@@ -51,6 +58,5 @@ namespace OSLab3
                 }
             }
         }
-
     }
 }
