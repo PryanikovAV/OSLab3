@@ -92,15 +92,25 @@ namespace OSLab3
                     availableMemory -= process.Memory;
                 }
 
-                int timeSlice = Math.Min(quantumTime, process.RemainingTime);
-                systemTime += timeSlice;
-                process.RemainingTime -= timeSlice;
 
+                int timeSlice = Math.Min(quantumTime, process.RemainingTime);
+                if (timeSlice > 0)
+                {
+                    systemTime += timeSlice;
+                    process.RemainingTime -= timeSlice;
+                }
+                else
+                {
+                    systemTime += quantumTime;
+                }
+                
+                
                 if (process.RemainingTime <= 0)
                 {
                     process.Status = Process.ProcessStatus.Completed;
                     availableMemory += process.Memory;
                 }
+
 
                 tableView.RefreshProcessGridView(processes);
                 updateTimeCallBack(systemTime);
@@ -114,136 +124,66 @@ namespace OSLab3
             MessageBox.Show("Round Robin завершён", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        public async Task SimulateSJFP(int totalMemory)
+        {
+            systemTime = 0;
+            availableMemory = totalMemory;
+            Process currentProcess = null;
 
-        //public void SimulateRR(int quantumTime, int totalMemory)
-        //{
-        //    systemTime = 0;
-        //    availableMemory = totalMemory;
+            processes = processes.OrderBy(p => p.ArrivalTime).ToList();
 
-        //    processes = processes.OrderBy(p => p.ArrivalTime).ToList();
+            while (processes.Any(p => p.Status != Process.ProcessStatus.Completed))
+            {
+                await WaitIfPaused(); // <-- ожидание, если Pause
 
-        //    while (processes.Any(p => p.RemainingTime > 0))
-        //    {
-        //        foreach (var process in processes)
-        //        {
-        //            if (process.Status == Process.ProcessStatus.Completed)
-        //            {
-        //                continue;
-        //            }
-        //            else if (process.RemainingTime == 0)
-        //            {
-        //                process.Status = Process.ProcessStatus.Completed;
-        //            }
-        //            else if (process.ArrivalTime > systemTime)
-        //            {
-        //                process.Status = Process.ProcessStatus.WaitingToStart;
-        //            }
-        //            else if (process.Memory > availableMemory)
-        //            {
-        //                process.Status= Process.ProcessStatus.WaitingForMemory;
-        //            }
+                
+                var readyProcesses = processes  // список: запуск-ОК / не завершён / память-ОК
+                    .Where(p => p.ArrivalTime <= systemTime && p.Status != Process.ProcessStatus.Completed && p.Memory <= availableMemory)
+                    .OrderBy(p => p.RemainingTime)
+                    .ToList();
 
-        //            else if (process.ArrivalTime >= systemTime)
-        //            {
-        //                if (process.RemainingTime <= quantumTime && process.Status != Process.ProcessStatus.Running)
-        //                {
-        //                    // запустим процесс на 1 такт для демонстрации
-        //                    availableMemory -= process.Memory;
-        //                    systemTime += process.RemainingTime;
-        //                    process.RemainingTime = 0;
-        //                    process.Status = Process.ProcessStatus.Running;
+                
+                if (readyProcesses.Any())
+                {
+                    var nextProcess = readyProcesses.First();
 
-        //                    tableView.RefreshProcessGridView(processes);
-        //                    updateMemoryCallBack(availableMemory, totalMemory);
-        //                    Application.DoEvents();
-        //                    Thread.Sleep(700);
+                    if (currentProcess != nextProcess)  // переходим к след. процессу, если он есть
+                    {
+                        // изначально доп условие:  currentProcess.Status == Process.ProcessStatus.Running...
+                        if (currentProcess != null && currentProcess.Status == Process.ProcessStatus.Running)
+                        {
+                            currentProcess.Status = Process.ProcessStatus.WaitingToStart;
+                            availableMemory += currentProcess.Memory;
+                        }
 
-        //                    //после завершим процесс
-        //                    availableMemory += process.Memory;
-        //                    process.Status = Process.ProcessStatus.Completed;
-        //                }
-        //                else if (process.RemainingTime > quantumTime && process.Status != Process.ProcessStatus.Running)
-        //                {
-        //                    systemTime += quantumTime;
-        //                    availableMemory -= process.Memory;
-        //                    process.RemainingTime -= quantumTime;
-        //                    process.Status = Process.ProcessStatus.Running;
-        //                }
-        //                else if (process.RemainingTime <= quantumTime && process.Status == Process.ProcessStatus.Running)
-        //                {
-        //                    systemTime += process.RemainingTime;
-        //                    process.RemainingTime = 0;
-        //                    availableMemory += process.Memory;
-        //                    process.Status = Process.ProcessStatus.Completed;
-        //                }
-        //                else if (process.RemainingTime > quantumTime && process.Status == Process.ProcessStatus.Running)
-        //                {
-        //                    systemTime += quantumTime;
-        //                    process.RemainingTime -= quantumTime;
-        //                }
-        //                else
-        //                {
-        //                    systemTime += quantumTime;
-        //                }
-        //            }
+                        currentProcess = nextProcess;
+                        currentProcess.Status = Process.ProcessStatus.Running;
+                        availableMemory -= currentProcess.Memory;
+                    }
 
-        //            tableView.RefreshProcessGridView(processes);
-        //            updateTimeCallBack(systemTime);
-        //            updateMemoryCallBack(availableMemory, totalMemory);
-        //            Application.DoEvents();
-        //            Thread.Sleep(700);
-        //        }
-        //    }
+                    currentProcess.RemainingTime--;
+                    systemTime++;
 
-        //    MessageBox.Show("Round Robin завершён", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
+                    if (currentProcess.RemainingTime <= 0)
+                    {
+                        currentProcess.Status = Process.ProcessStatus.Completed;
+                        availableMemory += currentProcess.Memory;
+                        currentProcess = null;
+                    }
+                }
+                else
+                {
+                    systemTime++;
+                }
 
-        //public void SimulateSJFD(int totalMemory)
-        //{
-        //    systemTime = 0;
-        //    availableMemory = totalMemory;
+                tableView.RefreshProcessGridView(processes);
+                updateTimeCallBack(systemTime);
+                updateMemoryCallBack(availableMemory, totalMemory);
+                Application.DoEvents();
+                await Task.Delay(700);
+            }
 
-
-        //    while (processes.Any(p => p.Status != Process.ProcessStatus.Completed))
-        //    {
-        //        var readyProcesses = processes
-        //            .Where(p => p.ArrivalTime <= systemTime && p.Status != Process.ProcessStatus.Completed)
-        //            .OrderBy(p => p.RemainingTime)
-        //            .ToList();
-
-        //        var process = readyProcesses.FirstOrDefault(p => p.Status == Process.ProcessStatus.WaitingToStart && p.Memory <= availableMemory);
-        //        if (process != null)
-        //        {
-        //            availableMemory -= process.Memory;
-        //            process.Status = Process.ProcessStatus.Running;
-        //        }
-
-        //        var runningProcess = readyProcesses.FirstOrDefault(p => p.Status == Process.ProcessStatus.Running);
-        //        if (runningProcess != null)
-        //        {
-        //            runningProcess.RemainingTime--;
-        //            systemTime++;
-
-        //            // Обновляем интерфейс и добавляем задержку для визуализации
-        //            updateTimeCallBack(systemTime);
-        //            tableView.RefreshProcessGridView(processes);
-        //            Thread.Sleep(700);
-
-        //            if (runningProcess.RemainingTime == 0)
-        //            {
-        //                runningProcess.Status = Process.ProcessStatus.Completed;
-        //                availableMemory += runningProcess.Memory;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            systemTime++;
-        //            updateTimeCallBack(systemTime);
-        //            Thread.Sleep(700);
-        //        }
-        //    }
-
-        //    MessageBox.Show("SJF с вытеснением завершён", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
+            MessageBox.Show("SJF вытесняющий завершён", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             arrivalTimeTextBox = new TextBox();
             burstTimeTextBox = new TextBox();
             memoryTextBox = new TextBox();
@@ -54,11 +54,13 @@
             systemDataGroupBox1 = new GroupBox();
             processButtonsBox1 = new GroupBox();
             processAddGroupBox1 = new GroupBox();
+            groupBox1 = new GroupBox();
             groupBoxAlgorithm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)processGridView).BeginInit();
             systemDataGroupBox1.SuspendLayout();
             processButtonsBox1.SuspendLayout();
             processAddGroupBox1.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // arrivalTimeTextBox
@@ -162,11 +164,11 @@
             // 
             groupBoxAlgorithm.Controls.Add(radioButtonRR);
             groupBoxAlgorithm.Controls.Add(radioButtonSJFD);
-            groupBoxAlgorithm.Location = new Point(551, 264);
+            groupBoxAlgorithm.Location = new Point(570, 22);
             groupBoxAlgorithm.Margin = new Padding(3, 2, 3, 2);
             groupBoxAlgorithm.Name = "groupBoxAlgorithm";
             groupBoxAlgorithm.Padding = new Padding(3, 2, 3, 2);
-            groupBoxAlgorithm.Size = new Size(202, 65);
+            groupBoxAlgorithm.Size = new Size(200, 70);
             groupBoxAlgorithm.TabIndex = 16;
             groupBoxAlgorithm.TabStop = false;
             groupBoxAlgorithm.Text = "Алгоритм планирования";
@@ -200,22 +202,23 @@
             processGridView.AllowUserToResizeRows = false;
             processGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             processGridView.Columns.AddRange(new DataGridViewColumn[] { id, arrivalTime, burstTime, remainingTime, memory });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Window;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            processGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            processGridView.Location = new Point(10, 9);
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Window;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            processGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            processGridView.Dock = DockStyle.Top;
+            processGridView.Location = new Point(0, 0);
             processGridView.Margin = new Padding(3, 2, 3, 2);
             processGridView.MultiSelect = false;
             processGridView.Name = "processGridView";
             processGridView.ReadOnly = true;
             processGridView.RowHeadersWidth = 51;
             processGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            processGridView.Size = new Size(743, 250);
+            processGridView.Size = new Size(813, 448);
             processGridView.TabIndex = 20;
             // 
             // id
@@ -224,7 +227,6 @@
             id.MinimumWidth = 6;
             id.Name = "id";
             id.ReadOnly = true;
-            id.Width = 60;
             // 
             // arrivalTime
             // 
@@ -232,7 +234,7 @@
             arrivalTime.MinimumWidth = 6;
             arrivalTime.Name = "arrivalTime";
             arrivalTime.ReadOnly = true;
-            arrivalTime.Width = 180;
+            arrivalTime.Width = 200;
             // 
             // burstTime
             // 
@@ -240,7 +242,7 @@
             burstTime.MinimumWidth = 6;
             burstTime.Name = "burstTime";
             burstTime.ReadOnly = true;
-            burstTime.Width = 180;
+            burstTime.Width = 200;
             // 
             // remainingTime
             // 
@@ -248,7 +250,7 @@
             remainingTime.MinimumWidth = 6;
             remainingTime.Name = "remainingTime";
             remainingTime.ReadOnly = true;
-            remainingTime.Width = 180;
+            remainingTime.Width = 200;
             // 
             // memory
             // 
@@ -256,7 +258,7 @@
             memory.MinimumWidth = 6;
             memory.Name = "memory";
             memory.ReadOnly = true;
-            memory.Width = 90;
+            memory.Width = 150;
             // 
             // pauseButton
             // 
@@ -293,21 +295,22 @@
             // 
             systemDataGroupBox1.Controls.Add(availableMemoryLabel);
             systemDataGroupBox1.Controls.Add(systemTimeLabel);
-            systemDataGroupBox1.Location = new Point(361, 264);
+            systemDataGroupBox1.Location = new Point(360, 22);
             systemDataGroupBox1.Name = "systemDataGroupBox1";
-            systemDataGroupBox1.Size = new Size(184, 65);
+            systemDataGroupBox1.Size = new Size(200, 70);
             systemDataGroupBox1.TabIndex = 24;
             systemDataGroupBox1.TabStop = false;
             systemDataGroupBox1.Text = "Системная информация";
             // 
             // processButtonsBox1
             // 
+            processButtonsBox1.Anchor = AnchorStyles.None;
             processButtonsBox1.Controls.Add(pauseButton);
             processButtonsBox1.Controls.Add(continueButton);
             processButtonsBox1.Controls.Add(startButton);
-            processButtonsBox1.Location = new Point(454, 332);
+            processButtonsBox1.Location = new Point(469, 98);
             processButtonsBox1.Name = "processButtonsBox1";
-            processButtonsBox1.Size = new Size(299, 44);
+            processButtonsBox1.Size = new Size(301, 45);
             processButtonsBox1.TabIndex = 25;
             processButtonsBox1.TabStop = false;
             // 
@@ -321,26 +324,35 @@
             processAddGroupBox1.Controls.Add(addButton);
             processAddGroupBox1.Controls.Add(burstTimeTextBox);
             processAddGroupBox1.Controls.Add(memoryTextBox);
-            processAddGroupBox1.Location = new Point(10, 264);
+            processAddGroupBox1.Location = new Point(6, 22);
             processAddGroupBox1.Name = "processAddGroupBox1";
-            processAddGroupBox1.Size = new Size(345, 112);
+            processAddGroupBox1.Size = new Size(342, 112);
             processAddGroupBox1.TabIndex = 26;
             processAddGroupBox1.TabStop = false;
             processAddGroupBox1.Text = "Добавление процессов";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(processAddGroupBox1);
+            groupBox1.Controls.Add(systemDataGroupBox1);
+            groupBox1.Controls.Add(processButtonsBox1);
+            groupBox1.Controls.Add(groupBoxAlgorithm);
+            groupBox1.Location = new Point(12, 453);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(777, 156);
+            groupBox1.TabIndex = 27;
+            groupBox1.TabStop = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(766, 388);
-            Controls.Add(processAddGroupBox1);
-            Controls.Add(processButtonsBox1);
-            Controls.Add(systemDataGroupBox1);
+            ClientSize = new Size(813, 624);
+            Controls.Add(groupBox1);
             Controls.Add(processGridView);
-            Controls.Add(groupBoxAlgorithm);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Планировщик процессов";
             groupBoxAlgorithm.ResumeLayout(false);
             groupBoxAlgorithm.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)processGridView).EndInit();
@@ -349,6 +361,7 @@
             processButtonsBox1.ResumeLayout(false);
             processAddGroupBox1.ResumeLayout(false);
             processAddGroupBox1.PerformLayout();
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -370,16 +383,17 @@
         private Button resetButton;
         private Button addButton;
         private DataGridView processGridView;
-        private DataGridViewTextBoxColumn id;
-        private DataGridViewTextBoxColumn arrivalTime;
-        private DataGridViewTextBoxColumn burstTime;
-        private DataGridViewTextBoxColumn remainingTime;
-        private DataGridViewTextBoxColumn memory;
         private Button pauseButton;
         private Button continueButton;
         private Label availableMemoryLabel;
         private GroupBox systemDataGroupBox1;
         private GroupBox processButtonsBox1;
         private GroupBox processAddGroupBox1;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn arrivalTime;
+        private DataGridViewTextBoxColumn burstTime;
+        private DataGridViewTextBoxColumn remainingTime;
+        private DataGridViewTextBoxColumn memory;
+        private GroupBox groupBox1;
     }
 }

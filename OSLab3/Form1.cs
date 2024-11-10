@@ -57,7 +57,7 @@ namespace OSLab3
             }
             else if (radioButtonSJFD.Checked)
             {
-                //scheduler.SimulateSJFD(totalMemory);
+                await scheduler.SimulateSJFP(totalMemory);  // SJF Preemptiv
             }
         }
 
